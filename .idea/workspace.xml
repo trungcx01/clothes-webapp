@@ -5,7 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77556af2-473d-4b9c-a43e-4417ad77f4ae" name="Changes" comment="ok">
+      <change afterPath="$PROJECT_DIR$/.idea/ClothesWeb.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/clotheswebsite/config/CorsConfigurer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/clotheswebsite/config/CustomUserDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/clotheswebsite/config/JWTAuthenticationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/clotheswebsite/config/JWTGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/clotheswebsite/config/JwtAuthEntryPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/clotheswebsite/controller/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/clotheswebsite/dto/AuthResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/clotheswebsite/dto/LoginDTO.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/clotheswebsite/entity/UserEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/clotheswebsite/exception/BlogAPIException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/clotheswebsite/helper/PasswordEncoderGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/target/classes/com/example/clotheswebsite/config/CustomUserDetailsService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/target/classes/com/example/clotheswebsite/config/JWTAuthenticationFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/target/classes/com/example/clotheswebsite/config/JWTGenerator.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/target/classes/com/example/clotheswebsite/config/JwtAuthEntryPoint.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/target/classes/com/example/clotheswebsite/controller/AuthController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/target/classes/com/example/clotheswebsite/dto/AuthResponseDTO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/target/classes/com/example/clotheswebsite/dto/LoginDTO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/target/classes/com/example/clotheswebsite/entity/UserEntity.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/target/classes/com/example/clotheswebsite/exception/BlogAPIException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/target/classes/com/example/clotheswebsite/helper/PasswordEncoderGenerator.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Frontend/src/components/Home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Frontend/src/components/Login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Frontend/src/services/AuthService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
@@ -215,7 +245,7 @@
       <workItem from="1699443973500" duration="8000" />
       <workItem from="1699445251732" duration="19000" />
       <workItem from="1700074913341" duration="621000" />
-      <workItem from="1703888350981" duration="797000" />
+      <workItem from="1703888350981" duration="1217000" />
     </task>
     <task id="LOCAL-00001" summary="ok">
       <option name="closed" value="true" />
