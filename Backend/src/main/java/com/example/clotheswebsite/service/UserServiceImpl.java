@@ -1,47 +1,52 @@
 package com.example.clotheswebsite.service;
 
-import com.example.clotheswebsite.entity.User;
+import com.example.clotheswebsite.entity.UserEntity;
 import com.example.clotheswebsite.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
-    public List<User> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
-    public User getUserById(int userId) {
+    public UserEntity getUserById(int userId) {
         return userRepository.findById(userId).orElse(null);
     }
 
     @Override
-    public User registerUser(User newUser) {
+    public UserEntity registerUser(UserEntity newUser) {
         newUser.setCreatedAt(LocalDateTime.now());
         newUser.setUpdatedAt(LocalDateTime.now());
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         return userRepository.save(newUser);
     }
 
     @Override
-    public User updateUser(int userId, User updateUser) {
-        User user = userRepository.findById(userId).orElse(null);
+    public UserEntity updateUser(int userId, UserEntity updateUser) {
+        UserEntity user = userRepository.findById(userId).orElse(null);
         if (user != null) {
             user.setEmail(updateUser.getEmail());
             user.setFullname(updateUser.getFullname());
             user.setGender(updateUser.getGender());
             user.setUsername(updateUser.getUsername());
-            user.setPassword(updateUser.getPassword());
+//            user.setPassword(passwordEncoder.encode(updateUser.getPassword()));
             user.setUpdatedAt(LocalDateTime.now());
-            user.setRole(updateUser.getRole());
+            user.setRoles(updateUser.getRoles());
             userRepository.save(user);
             return user; // Trả về người dùng sau khi đã được cập nhật
         }
@@ -49,12 +54,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void deleteUser(User user) {
+    public void deleteUser(UserEntity user) {
         userRepository.delete(user);
     }
 
     @Override
-    public List<User> searchUsers(String keyword) {
+    public List<UserEntity> searchUsers(String keyword) {
         return userRepository.findByUsernameContainingOrFullnameContainingOrEmailContaining(keyword, keyword, keyword);
     }
 }

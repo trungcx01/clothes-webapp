@@ -1,9 +1,8 @@
 package com.example.clotheswebsite.helper;
 
 import com.example.clotheswebsite.entity.Role;
-import com.example.clotheswebsite.entity.User;
+import com.example.clotheswebsite.entity.UserEntity;
 import com.example.clotheswebsite.repository.RoleRepository;
-import com.example.clotheswebsite.service.UserService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -30,14 +29,14 @@ public class ExcelHelper {
         return true;
     }
 
-    public static List<User> excelToUsers(InputStream is, RoleRepository roleRepository) {
+    public static List<UserEntity> excelToUsers(InputStream is, RoleRepository roleRepository) {
         try {
             Workbook workbook = new XSSFWorkbook(is);
 
             Sheet sheet = workbook.getSheet(SHEET);
             Iterator<Row> rows = sheet.iterator();
 
-            List<User> users = new ArrayList<User>();
+            List<UserEntity> users = new ArrayList<UserEntity>();
 
             int rowNumber = 0;
             while (rows.hasNext()) {
@@ -51,7 +50,7 @@ public class ExcelHelper {
 
                 Iterator<Cell> cellsInRow = currentRow.iterator();
 
-                User user = new User();
+                UserEntity user = new UserEntity();
 
                 int cellIdx = 0;
                 while (cellsInRow.hasNext()) {
@@ -79,9 +78,9 @@ public class ExcelHelper {
                             break;
 
                         case 5:
-                            for (Role x : roleRepository.findAll()){
-                                if (x.getRoleName().equals(currentCell.getStringCellValue())){
-                                    user.setRole(x);
+                            for (Role x : roleRepository.findAll()) {
+                                if (x.getRoleName().equals(currentCell.getStringCellValue())) {
+                                    user.setRoles(x);
                                 }
                             }
                             break;

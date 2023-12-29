@@ -24,6 +24,7 @@ const TableUsers = () => {
         setIsShowModalSubmitForm(false);
         setIsShowModalDelete(false);
     }
+    
     const displayDataUser = (user) => {
         setOriginalUser(user);
         setIsShowModalSubmitForm(true);
@@ -66,20 +67,20 @@ const TableUsers = () => {
         return dayjs(sqlDate).format('DD/MM/YYYY HH:mm:ss');
     }
 
-    const dataToExport = [
-        ["User ID", "Username", "Password", "Fullname", "Gender", "Email", "Role", "Created At", "Updated At"],
-        ...listUsers.map((item) =>[
-            item.userId,
-            item.username,
-            item.password,
-            item.fullname,
-            item.gender,
-            item.email,
-            item.role.roleName,
-            formatDate(item.createdAt),
-            formatDate(item.updatedAt)
-        ])
-    ];
+    // const dataToExport = [
+    //     ["User ID", "Username", "Password", "Fullname", "Gender", "Email", "Role", "Created At", "Updated At"],
+    //     ...listUsers.map((item) =>[
+    //         item.userId,
+    //         item.username,
+    //         item.password,
+    //         item.fullname,
+    //         item.gender,
+    //         item.email,
+    //         item.roles.map(role => role.roleName).join(', '),
+    //         formatDate(item.createdAt),
+    //         formatDate(item.updatedAt)
+    //     ])
+    // ];
 
     const importData = async (e) => {
         const file = e.target.files[0];
@@ -105,10 +106,10 @@ const TableUsers = () => {
                         <i className="fa-solid fa-file-import"></i> Import
                     </label>
                     <input id="import" type="file" hidden={true} onChange={importData}/>
-                    <CSVLink data={dataToExport}
+                    {/* <CSVLink data={dataToExport}
                              filename={"users.csv"}
                              className="btn btn-info mx-1"
-                             ><i className="fa-solid fa-file-arrow-down"></i> Export</CSVLink>
+                             ><i className="fa-solid fa-file-arrow-down"></i> Export</CSVLink> */}
                     <button
                         className="btn btn-primary mx-1"
                         onClick={() =>createNewUser()}>
@@ -140,7 +141,7 @@ const TableUsers = () => {
                         Email
                         <i onClick={() => handleSortUsers('email')} className="fa-solid fa-sort"></i>
                     </th>
-                    <th>Password</th>
+                    {/* <th>Password</th> */}
                     <th>Roles</th>
                     <th>
                         Created At
@@ -164,8 +165,8 @@ const TableUsers = () => {
                                 <td>{item.fullname}</td>
                                 <td>{item.gender}</td>
                                 <td>{item.email}</td>
-                                <td>{item.password}</td>
-                                <td>{item.role.roleName}</td>
+                                {/* <td>{item.password}</td> */}
+                                <td>{item.roles.map(role => role.roleName).join(', ')}</td>
                                 <td>{formatDate(item.createdAt)}</td>
                                 <td>{formatDate(item.updatedAt)}</td>
                                 <td className="d-flex">
