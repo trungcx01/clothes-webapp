@@ -1,7 +1,8 @@
-package com.example.clotheswebsite.service;
+package com.example.clotheswebsite.service.impl;
 
 import com.example.clotheswebsite.entity.UserEntity;
 import com.example.clotheswebsite.repository.UserRepository;
+import com.example.clotheswebsite.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -61,5 +62,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> searchUsers(String keyword) {
         return userRepository.findByUsernameContainingOrFullnameContainingOrEmailContaining(keyword, keyword, keyword);
+    }
+
+    @Override
+    public Boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 }

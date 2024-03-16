@@ -16,5 +16,6 @@ public interface UserService {
     void deleteUser(UserEntity user);
 
     List<UserEntity> searchUsers(String keyword);
+    Boolean existsByUsername(String username);
 
 }

@@ -21,8 +21,7 @@ public class UserController {
 
     @Autowired
     private RoleRepository roleRepository;
-
-
+    
     @GetMapping("/api/users")
     public List<UserEntity> getAllUsers(@RequestParam(name = "sortField", required = false, defaultValue = "") String sortField, @RequestParam(name = "sortBy", required = false, defaultValue = "") String sortBy) {
         List<UserEntity> allUsers = userService.getAllUsers();
@@ -54,7 +53,7 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/api/register-user")
     public ResponseEntity<UserEntity> registerUser(@RequestBody UserEntity newUser) {
         UserEntity registeredUser;
@@ -67,7 +66,7 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/api/update-user/{id}")
     public ResponseEntity<UserEntity> updateUser(@PathVariable int id, @RequestBody UserEntity updateUser) {
         UserEntity updatedUser = userService.updateUser(id, updateUser);
@@ -77,7 +76,7 @@ public class UserController {
         return ResponseEntity.notFound().build(); // Trả về 404 nếu không tìm thấy người dùng
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/api/delete-user/{id}")
     public void deleteUser(@PathVariable("id") int id) {
         userService.deleteUser(userService.getUserById(id));
@@ -89,7 +88,7 @@ public class UserController {
     }
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/api/roles")
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
