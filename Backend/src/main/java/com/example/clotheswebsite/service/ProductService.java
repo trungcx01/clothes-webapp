@@ -4,6 +4,7 @@ import com.example.clotheswebsite.dto.ProductDTO;
 import com.example.clotheswebsite.entity.Product;
 import com.example.clotheswebsite.entity.ProductSize;
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,5 +20,5 @@ public interface ProductService {
     List<Product> searchProduct(String keyword);
 
     ProductSize getProductSizeById(long productSizeId);
-
+    List<Product> filterProducts(String categories, String stock, String priceRanges);
 }

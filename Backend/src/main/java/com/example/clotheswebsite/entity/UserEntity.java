@@ -66,4 +66,7 @@ public class UserEntity {
     @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<Review> reviews = new HashSet<>();
 }

@@ -53,6 +53,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public Order addOrder(OrderDTO orderDTO) {
         Order order = modelMapper.map(orderDTO, Order.class);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -64,6 +65,9 @@ public class OrderServiceImpl implements OrderService {
         for (ItemDTO itemDTO : orderDTO.getItems()){
             Item item = modelMapper.map(itemDTO, Item.class);
             ProductSize productSize = productSizeRepository.findById(itemDTO.getProductSizeId()).orElseThrow(() -> new EntityNotFoundException("Không tồn tại ProductSize này!"));
+            productSize.setSoldQuantity(productSize.getSoldQuantity() + item.getQuantity());
+            productSize.setRemainingQuantity(productSize.getRemainingQuantity() - item.getQuantity());
+            productSizeRepository.save(productSize);
             item.setOrder(order);
             item.setPrice(productSize.getPrice() * itemDTO.getQuantity());
             item.setProductSize(productSize);

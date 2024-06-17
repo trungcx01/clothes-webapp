@@ -6,14 +6,17 @@ import com.example.clotheswebsite.entity.Product;
 import com.example.clotheswebsite.entity.ProductSize;
 import com.example.clotheswebsite.message.ResponseMessage;
 import com.example.clotheswebsite.repository.SupplierRepository;
+import com.example.clotheswebsite.service.CloudinaryService;
 import com.example.clotheswebsite.service.ProductService;
 import com.example.clotheswebsite.service.SizeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,9 @@ public class ProductController {
 
     @Autowired
     private SizeService sizeService;
+
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @GetMapping("/all")
     public ResponseEntity<List<Product>> getAllProducts(){
@@ -87,9 +93,18 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
+    @GetMapping("/filter")
+    public ResponseEntity<List<Product>> filterProduct(@Param("categories") String categories, @Param("stock") String stock, @Param("priceRanges") String priceRanges){
+        return ResponseEntity.ok(productService.filterProducts(categories, stock, priceRanges));
+    }
+
     @GetMapping("/productSizes/{id}")
     public ResponseEntity<ProductSize> getProductSizeById(@PathVariable("id") long productSizeId){
         return ResponseEntity.ok(productService.getProductSizeById(productSizeId));
     }
 
+    @PostMapping("/upload")
+    public ResponseEntity<?> uploadFile(@RequestParam("image") MultipartFile image){
+        return ResponseEntity.ok(cloudinaryService.upload(image));
+    }
 }

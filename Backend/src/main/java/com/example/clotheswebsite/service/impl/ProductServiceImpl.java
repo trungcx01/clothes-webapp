@@ -7,6 +7,7 @@ import com.example.clotheswebsite.repository.ProductRepository;
 import com.example.clotheswebsite.repository.ProductSizeRepository;
 import com.example.clotheswebsite.repository.SizeRepository;
 import com.example.clotheswebsite.repository.SupplierRepository;
+import com.example.clotheswebsite.service.CloudinaryService;
 import com.example.clotheswebsite.service.ProductService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -19,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -37,6 +40,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private CloudinaryService cloudinaryService;
     @Override
     public List<Product> getAllProducts() {
         List<Product> allProducts = productRepository.findAll();
@@ -83,12 +89,16 @@ public class ProductServiceImpl implements ProductService {
             ProductSize productSize = modelMapper.map(productSizeDTO, ProductSize.class);
             Size size = sizeRepository.findById(productSizeDTO.getSizeId()).orElseThrow(() -> new EntityNotFoundException("lỗi không tồn ta entity này"));
             productSize.setSize(size);
+//            productSize.setSoldQuantity(0);
             productSize.setOldPrice(productSizeDTO.getPrice());
             productSize.setProduct(newProduct);
             productSizes.add(productSize);
         }
         newProduct.setProductSizes(productSizes);
+        Map imageData = cloudinaryService.upload(productDTO.getImage());
+        newProduct.setImageUrl((String) imageData.get("url"));
         newProduct.setTotalSoldQuantity(productSizes.stream().mapToLong(ProductSize::getSoldQuantity).sum());
+        newProduct.setTotalRemainingQuantity(productSizes.stream().mapToLong(ProductSize::getRemainingQuantity).sum());
         return productRepository.save(newProduct);
     }
 
@@ -102,7 +112,8 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(updatedProductDTO.getCategory());
         product.setAgeFor(updatedProductDTO.getAgeFor());
         product.setGenderFor(updatedProductDTO.getGenderFor());
-        product.setImageUrl(updatedProductDTO.getImageUrl());
+        Map imageData = cloudinaryService.upload(updatedProductDTO.getImage());
+        product.setImageUrl((String) imageData.get("url"));
         product.setDescription(updatedProductDTO.getDescription());
         product.setSupplier(supplier);
         List<ProductSize> productSizes = new ArrayList<>();
@@ -117,7 +128,7 @@ public class ProductServiceImpl implements ProductService {
         }
         product.setProductSizes(productSizes);
         caculateDiscountPrice(product);
-        product.setTotalSoldQuantity(productSizes.stream().mapToLong(ProductSize::getSoldQuantity).sum());
+        product.setTotalRemainingQuantity(productSizes.stream().mapToLong(ProductSize::getRemainingQuantity).sum());
         return productRepository.save(product);
     }
 
@@ -136,9 +147,20 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.saveAll(products);
     }
 
+
+
     @Override
     public ProductSize getProductSizeById(long productSizeId) {
         return productSizeRepository.findById(productSizeId).orElseThrow(() -> new EntityNotFoundException("Không tồn tại ProductSize này!"));
+    }
+
+
+    @Override
+    public List<Product> filterProducts(String categories, String stock, String priceRanges) {
+        List<String> _categories = Arrays.asList(categories.split("\\s+"));
+        List<Integer> _priceRanges = Arrays.asList(priceRanges.split("\\s+")).stream().map(p -> Integer.parseInt(p)).toList();
+        return productRepository.filterProducts(_categories, stock, _priceRanges.get(0), _priceRanges.get(1),
+                _priceRanges.get(2), _priceRanges.get(3), _priceRanges.get(4),  _priceRanges.get(5));
     }
 
     private void caculateDiscountPrice(Product product){

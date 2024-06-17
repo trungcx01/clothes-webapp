@@ -1,5 +1,6 @@
 package com.example.clotheswebsite.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -56,5 +57,16 @@ public class Product implements Serializable {
 
     @Column(name = "total_sold_quantity", nullable = false)
     private long totalSoldQuantity;
+
+    @Column(name = "total_remaining_quantity", nullable = false)
+    private long totalRemainingQuantity;
+
+    @Column(name = "rate", nullable = false)
+    private double averageRate;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<Review> reviews = new HashSet<>();
+
 
 }
